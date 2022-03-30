@@ -35,9 +35,8 @@ public class Matrix {
         int multMatrix[][] = new int[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++{
-                matrix[i][j] = 0;
                 for(int k = 0; k < size; k++){
-                    multMatrix[i][j] += A[i][k] * B[k][j];
+                    multMatrix[i][j] = A[i][k] * B[k][j];
                 }
             }
             displayMatrix(int size, multMatrix[][]);
