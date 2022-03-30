@@ -43,11 +43,20 @@ public class Matrix {
     
     }
 
-    public void Strassens(){
-        strassensHelper();
+    public void Strassens(int[][] matrixA, int[][] matrixB,int start, int end){
+        strassensHelper(matrixA, matrixB, start, end);
     }
-    public void strassensHelper(){
-    
+
+    public void strassensHelper(int[][] matrixA, int[][] matrixB, int start, int end){
+        if((end - start) <= 2){
+            int product1 = matrixA[start-1][start-1] * (matrixB[start - 1][end -1] - matrixB[end - 1][end - 1]);
+            int product2 = matrixB[end-1][end-1] * (matrixA[start-1][start-1] + matrixA[start-1][end-1]);
+            int product3 = matrixB[start-1][start-1] * (matrixA[end-1][start-1] + matrixA[end-1][end-1]);
+            int product4 = matrixA[end-1][end-1] * (matrixB[end-1][start-1] - matrixB[start-1][start-1]);
+            int product5 = (matrixA[start-1][start-1]+matrixA[end-1][end-1])*(matrixB[start-1][start-1]+matrixB[end-1][end-1]);
+            int product6 = (matrixA[start-1][end-1] - matrixA[end-1][end-1])*(matrixB[end-1][start-1]+matrixB[end-1][end-1]);
+            int product7 = (matrixA[start-1][start-1] - matrixA[end-1][start-1])*(matrixB[start-1][start-1]+matrixB[start-1][end-1]);
+        }
     }
 
     /**
