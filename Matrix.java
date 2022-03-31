@@ -79,7 +79,7 @@ public class Matrix {
      * @param size is the number of equations in the matrix
      * @param matrix is the array that holds our matrix
      */
-    public static void displayMatrix(int size, int[][] matrix){
+    public void displayMatrix(int size, int[][] matrix){
         for(int i = 0; i < size; i++){
             String row = "[ ";
             for(int j = 0; j < size; j++){
