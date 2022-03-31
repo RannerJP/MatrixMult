@@ -31,8 +31,8 @@ public class Matrix {
     }
 
     
-    public void bruteForceSolve(int A[][], int B[][], int size){
-        int multMatrix[][] = new int[size][size];
+    public void bruteForceSolve(int[][] A, int[][] B, int size){
+        int[][] multMatrix = new int[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
                 multMatrix[i][j] = 0;
@@ -40,16 +40,35 @@ public class Matrix {
                     multMatrix[i][j] += A[i][k] * B[k][j];
                 }
             }
-            displayMatrix(int size, multMatrix[][]);
         }
+        displayMatrix(4, multMatrix);
     }
 
     public void divideAndConquer(){
         divideAndConquerHelper();
     }
 
-    public void divideAndConquerHelper(){
-    
+    public void divideAndConquerHelper(int[][] A){
+        int n = A.length;
+        int[][] divConqMatrix = new int[][];
+        int[][] A11 = new int[n/2][n/2];
+        int[][] A12 = new int[n/2][n/2];
+        int[][] A21 = new int[n/2][n/2];
+        int[][] A22 = new int[n/2][n/2];
+        int[][] B11 = new int[n/2][n/2];
+        int[][] B12 = new int[n/2][n/2];
+        int[][] B21 = new int[n/2][n/2];
+        int[][] B22 = new int[n/2][n/2];
+
+        int[][] C11 = (A11[][]*B11[][]) + (A12[][]*B21[][]);
+        int[][] C12 = (A11[][]*B12[][]) + (A12[][]*B22[][]);
+        int[][] C21 = (A21[][]*B11[][]) + (A22[][]*B21[][]);
+        int[][] C22 = (A21[][]*B12[][]) + (A22[][]*B22[][]);
+
+
+
+
+
     }
 
     public int[][] Strassens(int[][] matrixA, int[][] matrixB, int rowStart, int rowEnd, int columnStart, int columnEnd){
