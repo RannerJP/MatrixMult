@@ -51,7 +51,7 @@ public class Matrix {
 
     public void strassensHelper(int[][] matrixA, int[][] matrixB, int[][] matrixC, int rowStart, int rowEnd, int columnStart, int columnEnd){
         if((rowEnd - rowStart) <= 1){
-            int product1 = matrixA[rowStart-1][columnStart-1] * (matrixB[rowStart-1][columnStart-1] - matrixB[rowEnd-1][columnEnd-1]);
+            int product1 = matrixA[rowStart-1][columnStart-1] * (matrixB[rowStart-1][columnEnd-1] - matrixB[rowEnd-1][columnEnd-1]);
             int product2 = matrixB[rowEnd-1][columnEnd-1] * (matrixA[rowStart-1][columnStart-1] + matrixA[rowStart-1][columnEnd-1]);
             int product3 = matrixB[rowStart-1][columnStart-1] * (matrixA[rowEnd-1][columnStart-1] + matrixA[rowEnd-1][columnEnd-1]);
             int product4 = matrixA[rowEnd-1][columnEnd-1] * (matrixB[rowEnd-1][columnStart-1] - matrixB[rowStart-1][columnStart-1]);
