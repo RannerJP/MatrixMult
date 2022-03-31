@@ -43,9 +43,10 @@ public class Matrix {
     
     }
 
-    public void Strassens(int[][] matrixA, int[][] matrixB, int rowStart, int rowEnd, int columnStart, int columnEnd){
+    public int[][] Strassens(int[][] matrixA, int[][] matrixB, int rowStart, int rowEnd, int columnStart, int columnEnd){
         int[][] matrixC = new int[rowEnd][rowEnd];
         strassensHelper(matrixA, matrixB, matrixC, rowStart, rowEnd, columnStart, columnEnd);
+        return matrixC;
     }
 
     public void strassensHelper(int[][] matrixA, int[][] matrixB, int[][] matrixC, int rowStart, int rowEnd, int columnStart, int columnEnd){
