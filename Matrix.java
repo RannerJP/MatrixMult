@@ -13,7 +13,7 @@ public class Matrix {
         int[][] matrix = new int[newSize][newSize];
         for(int rowNums =0; rowNums < size; rowNums++){
             for(int columnNums = 0; columnNums < size; columnNums++){
-                matrix[rowNums][columnNums] = rand.nextInt(101);
+                matrix[rowNums][columnNums] = rand.nextInt(11);
             }
             for(int columnZeros = size; columnZeros < newSize; columnZeros++){
                 matrix[rowNums][columnZeros] = 0;
@@ -21,7 +21,7 @@ public class Matrix {
         }
         for(int rowZeros =0; rowZeros < size; rowZeros++){
             for(int columnNums = 0; columnNums < size; columnNums++){
-                matrix[rowZeros][columnNums] = rand.nextInt(100);
+                matrix[rowZeros][columnNums] = rand.nextInt(11);
             }
             for(int columnZeros = size; columnZeros < size; columnZeros++){
                 matrix[rowZeros][columnZeros] = 0;
@@ -44,62 +44,134 @@ public class Matrix {
         displayMatrix(4, multMatrix);
     }
 
-    public void divideAndConquer(){
-        divideAndConquerHelper();
-    }
-
-    public void divideAndConquerHelper(int[][] A){
-        int n = A.length;
-        int[][] divConqMatrix = new int[][];
-        int[][] A11 = new int[n/2][n/2];
-        int[][] A12 = new int[n/2][n/2];
-        int[][] A21 = new int[n/2][n/2];
-        int[][] A22 = new int[n/2][n/2];
-        int[][] B11 = new int[n/2][n/2];
-        int[][] B12 = new int[n/2][n/2];
-        int[][] B21 = new int[n/2][n/2];
-        int[][] B22 = new int[n/2][n/2];
-
-        int[][] C11 = (A11[][]*B11[][]) + (A12[][]*B21[][]);
-        int[][] C12 = (A11[][]*B12[][]) + (A12[][]*B22[][]);
-        int[][] C21 = (A21[][]*B11[][]) + (A22[][]*B21[][]);
-        int[][] C22 = (A21[][]*B12[][]) + (A22[][]*B22[][]);
-
-
-
-
-
-    }
-
-    public int[][] Strassens(int[][] matrixA, int[][] matrixB, int rowStart, int rowEnd, int columnStart, int columnEnd){
-        int[][] matrixC = new int[rowEnd][rowEnd];
-        strassensHelper(matrixA, matrixB, matrixC, rowStart, rowEnd, columnStart, columnEnd);
+    public int[][] divideAndConquer(int[][] matrixA, int[][] matrixB, int size){
+        int[][] matrixC = divideAndConquerHelper(matrixA,matrixB, size);
         return matrixC;
     }
 
-    public void strassensHelper(int[][] matrixA, int[][] matrixB, int[][] matrixC, int rowStart, int rowEnd, int columnStart, int columnEnd){
-        if((rowEnd - rowStart) <= 1){
-            int product1 = matrixA[rowStart-1][columnStart-1] * (matrixB[rowStart-1][columnEnd-1] - matrixB[rowEnd-1][columnEnd-1]);
-            int product2 = matrixB[rowEnd-1][columnEnd-1] * (matrixA[rowStart-1][columnStart-1] + matrixA[rowStart-1][columnEnd-1]);
-            int product3 = matrixB[rowStart-1][columnStart-1] * (matrixA[rowEnd-1][columnStart-1] + matrixA[rowEnd-1][columnEnd-1]);
-            int product4 = matrixA[rowEnd-1][columnEnd-1] * (matrixB[rowEnd-1][columnStart-1] - matrixB[rowStart-1][columnStart-1]);
-            int product5 = (matrixA[rowStart-1][columnStart-1]+matrixA[rowEnd-1][columnEnd-1])*(matrixB[rowStart-1][columnStart-1]+matrixB[rowEnd-1][columnEnd-1]);
-            int product6 = (matrixA[rowStart-1][columnEnd-1] - matrixA[rowEnd-1][columnEnd-1])*(matrixB[rowEnd-1][columnStart-1]+matrixB[rowEnd-1][columnEnd-1]);
-            int product7 = (matrixA[rowStart-1][columnStart-1] - matrixA[rowEnd-1][columnStart-1])*(matrixB[rowStart-1][columnStart-1]+matrixB[rowStart-1][columnEnd-1]);
-            matrixC[rowStart-1][columnStart-1] = (-1*product2) + product4 + product5 + product6;
-            matrixC[rowStart-1][columnEnd-1] = product1 + product2;
-            matrixC[rowEnd-1][columnStart-1] = product3 + product4;
-            matrixC[rowEnd-1][columnEnd-1] = product1 - product3 + product5 - product7;
+
+    private int[][] divideAndConquerHelper(int[][] matrixA, int[][] matrixB, int size){
+        if(size == 1){
+            int[][] base = new int[1][1];
+            base[0][0] = matrixA[0][0] * matrixB[0][0];
+            return base;
         }
         else{
-            int middleRow = (int)Math.floor((rowStart+rowEnd)/2);
-            int middleColumn = (int)Math.floor((columnStart+columnEnd)/2);
-            strassensHelper(matrixA, matrixB, matrixC, rowStart, middleRow, columnStart, middleColumn);
-            strassensHelper(matrixA, matrixB, matrixC, middleRow+1, rowEnd, columnStart, middleColumn);
-            strassensHelper(matrixA, matrixB, matrixC, rowStart, middleRow, middleColumn + 1, columnEnd);
-            strassensHelper(matrixA, matrixB, matrixC, middleRow+1, rowEnd, middleColumn + 1, columnEnd);
+            int halfSize = size/2;
+            int[][] A11 = new int[halfSize][halfSize];
+            int[][] A12 = new int[halfSize][halfSize];
+            int[][] A21 = new int[halfSize][halfSize];
+            int[][] A22 = new int[halfSize][halfSize];
+            int[][] B11 = new int[halfSize][halfSize];
+            int[][] B12 = new int[halfSize][halfSize];
+            int[][] B21 = new int[halfSize][halfSize];
+            int[][] B22 = new int[halfSize][halfSize];
+            for(int i = 0; i<halfSize; i++){
+                for(int j = 0; j<halfSize; j++){
+                    A11[i][j] = matrixA[i][j];
+                    A12[i][j] = matrixA[i][j+halfSize];
+                    A21[i][j] = matrixA[i+halfSize][j];
+                    A22[i][j] = matrixA[i+halfSize][j+halfSize];
+                    B11[i][j] = matrixB[i][j];
+                    B12[i][j] = matrixB[i][j+halfSize];
+                    B21[i][j] = matrixB[i+halfSize][j];
+                    B22[i][j] = matrixB[i+halfSize][j+halfSize];
+                }
+            }
+
+            int[][] C11 = matrixAddition(divideAndConquerHelper(A11, B11, halfSize), divideAndConquerHelper(A12, B21, halfSize), halfSize);
+            int[][] C12 = matrixAddition(divideAndConquerHelper(A11, B12, halfSize), divideAndConquerHelper(A12, B22, halfSize), halfSize);
+            int[][] C21 = matrixAddition(divideAndConquerHelper(A21, B11, halfSize), divideAndConquerHelper(A22, B21, halfSize), halfSize);
+            int[][] C22 = matrixAddition(divideAndConquerHelper(A21, B12, halfSize), divideAndConquerHelper(A22, B22, halfSize), halfSize);
+            int[][] C = new int[size][size];
+            for(int i =0; i<halfSize; i++){
+                for(int j =0; j<halfSize; j++){
+                    C[i][j] = C11[i][j];
+                    C[i][j+halfSize] = C12[i][j];
+                    C[i+halfSize][j] = C21[i][j];
+                    C[i+halfSize][j+halfSize] = C22[i][j];
+                }
+            }
+            return C;
+        }
+    }
+
+    public int[][] Strassens(int[][] matrixA, int[][] matrixB, int size){
+        int[][] matrixC = strassensHelper(matrixA, matrixB, size);
+        return matrixC;
+    }
+
+    private int[][] strassensHelper(int[][] matrixA, int[][] matrixB, int size){
+        if(size == 1){
+            int[][] base = new int[1][1];
+            base[0][0] = matrixA[0][0] * matrixB[0][0];
+            return base;
+        }
+        else{
+            int halfSize = size/2;
+            int[][] A11 = new int[halfSize][halfSize];
+            int[][] A12 = new int[halfSize][halfSize];
+            int[][] A21 = new int[halfSize][halfSize];
+            int[][] A22 = new int[halfSize][halfSize];
+            int[][] B11 = new int[halfSize][halfSize];
+            int[][] B12 = new int[halfSize][halfSize];
+            int[][] B21 = new int[halfSize][halfSize];
+            int[][] B22 = new int[halfSize][halfSize];
+            for(int i = 0; i<halfSize; i++){
+                for(int j = 0; j<halfSize; j++){
+                    A11[i][j] = matrixA[i][j];
+                    A12[i][j] = matrixA[i][j+halfSize];
+                    A21[i][j] = matrixA[i+halfSize][j];
+                    A22[i][j] = matrixA[i+halfSize][j+halfSize];
+                    B11[i][j] = matrixB[i][j];
+                    B12[i][j] = matrixB[i][j+halfSize];
+                    B21[i][j] = matrixB[i+halfSize][j];
+                    B22[i][j] = matrixB[i+halfSize][j+halfSize];
+                }
+            }
+            int[][] product1 = strassensHelper(A11, matrixSubtraction(B12, B22, halfSize), halfSize);
+            int[][] product2 = strassensHelper(matrixAddition(A11, A12, halfSize), B22, halfSize);
+            int[][] product3 = strassensHelper(matrixAddition(A21, A22, halfSize), B11, halfSize);
+            int[][] product4 = strassensHelper(A22, matrixSubtraction(B21, B11, halfSize), halfSize);
+            int[][] product5 = strassensHelper(matrixAddition(A11, A22, halfSize), matrixAddition(B11, B22, halfSize), halfSize);
+            int[][] product6 = strassensHelper(matrixSubtraction(A12, A22, halfSize), matrixAddition(B21, B22, halfSize), halfSize);
+            int[][] product7 = strassensHelper(matrixSubtraction(A11, A21, halfSize), matrixAddition(B11, B12, halfSize), halfSize);
+            int[][] C11 = matrixSubtraction(matrixAddition(matrixAddition(product4, product5, halfSize), product6, halfSize), product2, halfSize);
+            int[][] C12 = matrixAddition(product1, product2, halfSize);
+            int[][] C21 = matrixAddition(product3, product4, halfSize);
+            int[][] C22 = matrixAddition(matrixSubtraction(product1, product3, halfSize), matrixSubtraction(product5, product7, halfSize), halfSize);
+            int[][] C = new int[size][size];
+            for(int i =0; i<halfSize; i++){
+                for(int j =0; j<halfSize; j++){
+                    C[i][j] = C11[i][j];
+                    C[i][j+halfSize] = C12[i][j];
+                    C[i+halfSize][j] = C21[i][j];
+                    C[i+halfSize][j+halfSize] = C22[i][j];
+                }
+            }
+            return C;
         }
 
+    }
+
+    private int[][] matrixAddition(int[][] matrixA, int[][] matrixB, int size){
+        int[][] temp = new int[size][size];
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j <size; j++){
+                temp[i][j] = matrixA[i][j] + matrixB[i][j];
+            }
+        }
+        return temp;
+    }
+
+    private int[][] matrixSubtraction(int[][] matrixA, int[][] matrixB, int size){
+        int[][] temp = new int[size][size];
+        for(int i = 0; i<size; i++){
+            for(int j = 0; j <size; j++){
+                temp[i][j] = matrixA[i][j] - matrixB[i][j];
+            }
+        }
+        return temp;
     }
 
     /**
