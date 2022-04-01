@@ -31,14 +31,24 @@ public class Matrix {
     }
 
     
-    public void bruteForceSolve(){
-
+    public void bruteForceSolve(int[][] A, int[][] B, int size){
+        int[][] multMatrix = new int[size][size];
+        for(int i = 0; i < size; i++){
+            for(int j = 0; j < size; j++){
+                multMatrix[i][j] = 0;
+                for(int k = 0; k < size; k++){
+                    multMatrix[i][j] += A[i][k] * B[k][j];
+                }
+            }
+        }
+        displayMatrix(4, multMatrix);
     }
 
     public int[][] divideAndConquer(int[][] matrixA, int[][] matrixB, int size){
         int[][] matrixC = divideAndConquerHelper(matrixA,matrixB, size);
         return matrixC;
     }
+
 
     private int[][] divideAndConquerHelper(int[][] matrixA, int[][] matrixB, int size){
         if(size == 1){
