@@ -35,12 +35,55 @@ public class Matrix {
 
     }
 
-    public void divideAndConquer(){
-        divideAndConquerHelper();
+    public int[][] divideAndConquer(int[][] matrixA, int[][] matrixB, int size){
+        int[][] matrixC = divideAndConquerHelper(matrixA,matrixB, size);
+        return matrixC;
     }
 
-    public void divideAndConquerHelper(){
-    
+    private int[][] divideAndConquerHelper(int[][] matrixA, int[][] matrixB, int size){
+        if(size == 1){
+            int[][] base = new int[1][1];
+            base[0][0] = matrixA[0][0] * matrixB[0][0];
+            return base;
+        }
+        else{
+            int halfSize = size/2;
+            int[][] A11 = new int[halfSize][halfSize];
+            int[][] A12 = new int[halfSize][halfSize];
+            int[][] A21 = new int[halfSize][halfSize];
+            int[][] A22 = new int[halfSize][halfSize];
+            int[][] B11 = new int[halfSize][halfSize];
+            int[][] B12 = new int[halfSize][halfSize];
+            int[][] B21 = new int[halfSize][halfSize];
+            int[][] B22 = new int[halfSize][halfSize];
+            for(int i = 0; i<halfSize; i++){
+                for(int j = 0; j<halfSize; j++){
+                    A11[i][j] = matrixA[i][j];
+                    A12[i][j] = matrixA[i][j+halfSize];
+                    A21[i][j] = matrixA[i+halfSize][j];
+                    A22[i][j] = matrixA[i+halfSize][j+halfSize];
+                    B11[i][j] = matrixB[i][j];
+                    B12[i][j] = matrixB[i][j+halfSize];
+                    B21[i][j] = matrixB[i+halfSize][j];
+                    B22[i][j] = matrixB[i+halfSize][j+halfSize];
+                }
+            }
+
+            int[][] C11 = matrixAddition(divideAndConquerHelper(A11, B11, halfSize), divideAndConquerHelper(A12, B21, halfSize), halfSize);
+            int[][] C12 = matrixAddition(divideAndConquerHelper(A11, B12, halfSize), divideAndConquerHelper(A12, B22, halfSize), halfSize);
+            int[][] C21 = matrixAddition(divideAndConquerHelper(A21, B11, halfSize), divideAndConquerHelper(A22, B21, halfSize), halfSize);
+            int[][] C22 = matrixAddition(divideAndConquerHelper(A21, B12, halfSize), divideAndConquerHelper(A22, B22, halfSize), halfSize);
+            int[][] C = new int[size][size];
+            for(int i =0; i<halfSize; i++){
+                for(int j =0; j<halfSize; j++){
+                    C[i][j] = C11[i][j];
+                    C[i][j+halfSize] = C12[i][j];
+                    C[i+halfSize][j] = C21[i][j];
+                    C[i+halfSize][j+halfSize] = C22[i][j];
+                }
+            }
+            return C;
+        }
     }
 
     public int[][] Strassens(int[][] matrixA, int[][] matrixB, int size){
@@ -48,7 +91,7 @@ public class Matrix {
         return matrixC;
     }
 
-    public int[][] strassensHelper(int[][] matrixA, int[][] matrixB, int size){
+    private int[][] strassensHelper(int[][] matrixA, int[][] matrixB, int size){
         if(size == 1){
             int[][] base = new int[1][1];
             base[0][0] = matrixA[0][0] * matrixB[0][0];
