@@ -35,7 +35,7 @@ public class Main {
         runTime = System.currentTimeMillis() - startTime;
         System.out.println("Strassens time: " + runTime + " for matrix size: " + 4);
         test.displayMatrix(4, strassens);
-        for(int i = 2; i < 1025; i = i*2){
+        for(int i = 2; i < 513; i = i*2){
             for(int j = 1; j<=10; j++){
                 int[][] a = test.generateMatrix(i);
                 int[][] b = test.generateMatrix(i);
