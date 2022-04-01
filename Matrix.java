@@ -31,7 +31,7 @@ public class Matrix {
     }
 
     
-    public void bruteForceSolve(int[][] A, int[][] B, int size){
+    public int[][] bruteForceSolve(int[][] A, int[][] B, int size){
         int[][] multMatrix = new int[size][size];
         for(int i = 0; i < size; i++){
             for(int j = 0; j < size; j++){
@@ -41,7 +41,7 @@ public class Matrix {
                 }
             }
         }
-        displayMatrix(4, multMatrix);
+        return multMatrix;
     }
 
     public int[][] divideAndConquer(int[][] matrixA, int[][] matrixB, int size){
@@ -191,5 +191,6 @@ public class Matrix {
             row = row + "]";
             System.out.println(row);
         }
+        System.out.println(" ");
     }
 }
