@@ -2,6 +2,11 @@ import java.util.Random;
 public class Matrix {
     Random rand = new Random();
 
+    /**
+     * Generates a matrix of a specified size with random values
+     * @param size is the size of the matrix
+     * @return a matrix with random values
+     */
     public int[][] generateMatrix(int size){
         double logTwo;
         int newSize = size;
@@ -30,7 +35,13 @@ public class Matrix {
         return matrix;
     }
 
-    
+    /**
+     * Does matrix multiplication using the brute force method
+     * @param A Matrix A
+     * @param B Matrix B
+     * @param size Size of the matrices being solved
+     * @return the solved matrix C
+     */
     public int[][] bruteForceSolve(int[][] A, int[][] B, int size){
         int[][] multMatrix = new int[size][size];
         for(int i = 0; i < size; i++){
@@ -44,12 +55,25 @@ public class Matrix {
         return multMatrix;
     }
 
+    /**
+     * Solves matrix multiplication with the divide and conquer section
+     * @param matrixA matrix A
+     * @param matrixB matrix B
+     * @param size the size of all matrices
+     * @return the sovled matrix C
+     */
     public int[][] divideAndConquer(int[][] matrixA, int[][] matrixB, int size){
         int[][] matrixC = divideAndConquerHelper(matrixA,matrixB, size);
         return matrixC;
     }
 
-
+    /**
+     * The inner recursive method for divide and conquer
+     * @param matrixA matrix A
+     * @param matrixB matrix B
+     * @param size the size of all matrices
+     * @return the sovled matrix C
+     */
     private int[][] divideAndConquerHelper(int[][] matrixA, int[][] matrixB, int size){
         if(size == 1){
             int[][] base = new int[1][1];
@@ -96,11 +120,25 @@ public class Matrix {
         }
     }
 
+    /**
+     * Solves Matrix Multiplication using strassens method
+     * @param matrixA matrix a
+     * @param matrixB matrix b
+     * @param size the size of the matrices
+     * @return the solved matrix C
+     */
     public int[][] Strassens(int[][] matrixA, int[][] matrixB, int size){
         int[][] matrixC = strassensHelper(matrixA, matrixB, size);
         return matrixC;
     }
 
+    /**
+     * The recusive innner method for Strassen
+     * @param matrixA Matrix A
+     * @param matrixB Matrix B
+     * @param size the size of the matrices
+     * @return the solved matrix C
+     */
     private int[][] strassensHelper(int[][] matrixA, int[][] matrixB, int size){
         if(size == 1){
             int[][] base = new int[1][1];
@@ -154,6 +192,13 @@ public class Matrix {
 
     }
 
+    /**
+     * Does matrix addition on two Martices
+     * @param matrixA matrix A
+     * @param matrixB matrix B
+     * @param size size of the matrices
+     * @return the addition of both matrices
+     */
     private int[][] matrixAddition(int[][] matrixA, int[][] matrixB, int size){
         int[][] temp = new int[size][size];
         for(int i = 0; i<size; i++){
@@ -164,6 +209,13 @@ public class Matrix {
         return temp;
     }
 
+    /**
+     * Does matrix subtraction on two Martices
+     * @param matrixA matrix A
+     * @param matrixB matrix B
+     * @param size size of the matrices
+     * @return the subtraction of both matrices
+     */
     private int[][] matrixSubtraction(int[][] matrixA, int[][] matrixB, int size){
         int[][] temp = new int[size][size];
         for(int i = 0; i<size; i++){
